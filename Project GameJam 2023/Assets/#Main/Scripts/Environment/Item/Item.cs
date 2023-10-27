@@ -10,10 +10,10 @@ public class Item : MonoBehaviour
 
     public void GetItem()
     {
-        if(typeItem == TypeItem.AMMO)
+        if(typeItem == TypeItem.SCRAPS)
         {
 
-        }else if (typeItem == TypeItem.SCRAB)
+        }else if (typeItem == TypeItem.BATTERY)
         {
 
         }
@@ -38,7 +38,7 @@ public class Item : MonoBehaviour
 
 public enum TypeItem
 { 
-    AMMO,
-    SCRAB
+    SCRAPS,
+    BATTERY
 }
 

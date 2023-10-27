@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    public int water;
+    public int fertilizer;
+
+    public int scraps;
+    public int battery;
     void Start()
     {
         
@@ -12,6 +17,11 @@ public class ResourceManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+
+    public void Water(int water)
     {
         
     }
