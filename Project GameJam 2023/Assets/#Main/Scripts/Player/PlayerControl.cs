@@ -11,6 +11,7 @@ public class PlayerControl : MonoBehaviour
 
     [Header("Component")]
     public Rigidbody2D rigidBody;
+    public SpriteRenderer spriteCharacter;
 
     private Vector2 movement;
 
@@ -27,7 +28,14 @@ public class PlayerControl : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-
+        if (movement.x < 0)
+        {
+            spriteCharacter.flipX = true;
+        }
+        else if (movement.x > 0)
+        {
+            spriteCharacter.flipX = false;
+        }
     }
 
     private void FixedUpdate()
