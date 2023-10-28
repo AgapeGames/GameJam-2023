@@ -16,7 +16,7 @@ TagManager:
   - Enemy
   - BulletPlayer
   - BulletEnemy
-  - 
+  - FamilyPlayer
   - 
   - 
   - 
@@ -46,6 +46,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Item
+    uniqueID: 1675095345
+    locked: 0
   - name: Player
     uniqueID: 1310966683
+    locked: 0
+  - name: UI
+    uniqueID: 3876766199
     locked: 0

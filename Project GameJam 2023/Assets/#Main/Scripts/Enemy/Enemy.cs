@@ -15,7 +15,10 @@ public class Enemy : MonoBehaviour
     public Transform targetPlayer;
 
     public float rangeDetectionPlayer;
+    public float rangeStop;
 
+
+    public bool isStop;
     void Start()
     {
         
@@ -23,7 +26,9 @@ public class Enemy : MonoBehaviour
 
     public void Init()
     {
-        //targetPlant = 
+        targetPlant = GameManager.Instance.positionTree;
+        targetPlayer = GameManager.Instance.positionPlayer;
+        target = targetPlant;
     }
 
     void Update()
@@ -36,6 +41,17 @@ public class Enemy : MonoBehaviour
         {
             target = targetPlant;
         }
+
+        if (Vector3.Distance(transform.position, target.position) < rangeStop)
+        {
+            isStop = true;
+        }
+        else
+        {
+            isStop = false;
+        }
+
+        if (isStop) return;
 
         Vector3 direction = target.position - transform.position;
 
@@ -50,6 +66,8 @@ public class Enemy : MonoBehaviour
 
         direction.Normalize();
 
+
+
         Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
 
         transform.position = newPosition;
@@ -61,6 +79,7 @@ public class Enemy : MonoBehaviour
 
         if(health <= 0)
         {
+            GameManager.Instance.EnemyDie(this);
             Destroy(gameObject);
         }
     }

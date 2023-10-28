@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TowerBase : MonoBehaviour
 {
@@ -9,9 +10,14 @@ public class TowerBase : MonoBehaviour
     public GameObject towerLocked;
     public GameObject towerUnlocked;
 
+    public TextMeshProUGUI textBuild;
+
     public int scraps;
     public int battery;
 
+    public bool isUnlocked;
+
+    private bool playerInside;
     void Start()
     {
         towerLocked.SetActive(true);
@@ -21,31 +27,49 @@ public class TowerBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(playerInside)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                UnlockTower();
+            }
+        }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isUnlocked) return;
         if (collision.gameObject.tag.Equals("Player"))
         {
+            textBuild.text = $"Build\nScraps: {scraps}\nBattery: {battery}";
             interactionPopup.SetActive(true);
+            playerInside = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (isUnlocked) return;
         if (collision.gameObject.tag.Equals("Player"))
         {
             interactionPopup.SetActive(false);
+            playerInside = false;
         }
     }
 
-    public void UnlockTower(int scraps, int battery)
+    public void UnlockTower()
     {
-        if(scraps >= this.scraps && battery >= this.battery)
+        if(ResourceManager.Instance.scraps >= this.scraps && ResourceManager.Instance.battery >= this.battery)
         {
-            //Kurangin
+            ResourceManager.Instance.Scraps(-scraps);
+            ResourceManager.Instance.Battery(-battery);
+
             towerLocked.SetActive(false);
             towerUnlocked.SetActive(true);
+
+            interactionPopup.SetActive(false);
+
+            playerInside = false;
         }
     }
 }
