@@ -41,11 +41,13 @@ public class TaskControl : MonoBehaviour
                 {
                     if (taskType == TaskType.WATER)
                     {
+                        GameManager.Instance.PlayerFreeze();
                         CanvasManager.Instance.panelTaskWater.SetActive(true);
                     }
                     else if (taskType == TaskType.FERTILIZER)
                     {
                         //Open Canvas Mini Game
+                        GameManager.Instance.PlayerFreeze();
                         CanvasManager.Instance.panelTaskFertilizer.SetActive(true);
                     }
 
@@ -59,6 +61,7 @@ public class TaskControl : MonoBehaviour
 
     public void ResetTask()
     {
+        GameManager.Instance.PlayerUnfreeze();
         CanvasManager.Instance.panelTaskWater.SetActive(false);
         CanvasManager.Instance.panelTaskFertilizer.SetActive(false);
         interactionPopup.SetActive(false);

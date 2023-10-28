@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class TreeControl : MonoBehaviour
 {
@@ -20,6 +22,10 @@ public class TreeControl : MonoBehaviour
 
 
     public GameObject[] listSkin;
+
+
+    public TextMeshProUGUI textHealth;
+    public Slider sliderHealth;
     private void Awake()
     {
         Instance = this;
@@ -31,39 +37,53 @@ public class TreeControl : MonoBehaviour
 
     void Update()
     {
-        if(playerInside)
+        textHealth.text = $"{(int)health}/{100}";
+        sliderHealth.value = health;
+
+        if (level < 5)
         {
-            if (currentFertilizer == GetNeedFertilizer() && currentWater == GetNeedWater())
+            if (playerInside)
             {
-                currentFertilizer = 0;
-                currentWater = 0;
-                level++;
-
-                RefreshSize();
-            }
-
-            if (Input.GetKey(KeyCode.E))
-            {
-
-                if (currentWater < GetNeedWater())
+                if (currentFertilizer == GetNeedFertilizer() && currentWater == GetNeedWater())
                 {
-                    if (ResourceManager.Instance.water > 0)
+                    currentFertilizer = 0;
+                    currentWater = 0;
+                    level++;
+
+                    if (level >= 5)
                     {
-                        ResourceManager.Instance.Water(-1);
-                        currentWater++;
+                        level = 5;
+                        GameManager.Instance.GameWin();
+                        return;
                     }
+                    RefreshSize();
                 }
 
-                if (currentFertilizer < GetNeedFertilizer())
-                {
-                    if (ResourceManager.Instance.fertilizer > 0)
-                    {
-                        ResourceManager.Instance.Fertilizer(-1);
-                        currentFertilizer++;
-                    }
-                }
+                if (level >= 5) return;
 
-                CanvasManager.Instance.RefreshRequirement();
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+
+                    if (currentWater < GetNeedWater())
+                    {
+                        if (ResourceManager.Instance.water > 0)
+                        {
+                            ResourceManager.Instance.Water(-1);
+                            currentWater++;
+                        }
+                    }
+
+                    if (currentFertilizer < GetNeedFertilizer())
+                    {
+                        if (ResourceManager.Instance.fertilizer > 0)
+                        {
+                            ResourceManager.Instance.Fertilizer(-1);
+                            currentFertilizer++;
+                        }
+                    }
+
+                    CanvasManager.Instance.RefreshRequirement();
+                }
             }
         }
 
@@ -106,11 +126,22 @@ public class TreeControl : MonoBehaviour
 
     public int GetNeedWater()
     {
+        if (level >= 5) return 999;
         return requirementWater[level - 1];
     }
     public int GetNeedFertilizer()
     {
+        if (level >= 5) return 999;
         return requirementFertilizer[level - 1];
     }
 
+    public void Health(int health)
+    {
+        this.health += health;
+
+        if(this.health <= 0)
+        {
+            GameManager.Instance.GameLose();
+        }
+    }
 }

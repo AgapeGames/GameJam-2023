@@ -21,6 +21,9 @@ public class CanvasManager : MonoBehaviour
 
     public GameObject panelTaskWater;
     public GameObject panelTaskFertilizer;
+
+    public GameObject panelLose;
+    public GameObject panelWin;
     private void Awake()
     {
         Instance = this;

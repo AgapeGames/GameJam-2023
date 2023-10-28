@@ -17,6 +17,12 @@ public class TowerWeapon : MonoBehaviour
     public float bulletSpeed;
     private List<GameObject> enemiesInRange = new List<GameObject>();
 
+
+    public Sprite spriteTowerDown;
+
+    public Sprite spriteTowerUp;
+
+    public SpriteRenderer srTower;
     void Start()
     {
     }
@@ -38,6 +44,15 @@ public class TowerWeapon : MonoBehaviour
         }
 
         if (target == null) return;
+
+        if(target.transform.position.y > transform.position.y)
+        {
+            srTower.sprite = spriteTowerUp;
+        }
+        else if (target.transform.position.y < transform.position.y)
+        {
+            srTower.sprite = spriteTowerDown;
+        }
 
         Vector3 direction = target.transform.position - transform.position;
         direction.z = 0;

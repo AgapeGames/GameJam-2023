@@ -31,6 +31,9 @@ public class Enemy : MonoBehaviour
 
     public GameObject effectDie;
 
+
+    public AudioClip clipExplode;
+    public AudioClip clipDie;
     IEnumerator ChangeColor()
     {
         Color initialColor = spriteCharacter.color; // get the initial color
@@ -48,6 +51,12 @@ public class Enemy : MonoBehaviour
         {
             targetPlayer.GetComponent<PlayerControl>().Health(-damageBomb);
         }
+        if (Vector3.Distance(transform.position, targetPlant.position) < rangeSuicide)
+        {
+            targetPlant.GetComponent<TreeControl>().Health(-damageBomb);
+        }
+
+        SoundManager.Instance.PlaySFX(clipExplode);
 
         GameObject obj = Instantiate(effectDie, transform.position, transform.rotation);
         Destroy(obj, 2f);
@@ -128,6 +137,7 @@ public class Enemy : MonoBehaviour
 
         if(health <= 0)
         {
+            SoundManager.Instance.PlaySFX(clipDie);
             GameManager.Instance.EnemyDie(this);
             GameObject obj = Instantiate(effectDie, transform.position, transform.rotation);
             Destroy(obj, 2f);
@@ -138,5 +148,14 @@ public class Enemy : MonoBehaviour
     public void Suicide()
     {
         isSuicide = true;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag.Equals("Tree"))
+        {
+            isStop = true;
+            isSuicide = true;
+        }
     }
 }

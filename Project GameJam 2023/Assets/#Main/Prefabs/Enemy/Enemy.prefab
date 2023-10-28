@@ -164,6 +164,8 @@ MonoBehaviour:
   damageBomb: 20
   targetColor: {r: 1, g: 0, b: 0, a: 1}
   effectDie: {fileID: 8236398206585415445, guid: d3a346a67cd71d340be421c9259f4a63, type: 3}
+  clipExplode: {fileID: 8300000, guid: 6bccc07ce349cb447a5e93a49b6b2f2e, type: 3}
+  clipDie: {fileID: 8300000, guid: 6e15d562e3b43a346ba7b0e307984ab3, type: 3}
 --- !u!61 &4407467259598907050
 BoxCollider2D:
   m_ObjectHideFlags: 0

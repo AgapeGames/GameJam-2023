@@ -6,10 +6,11 @@ using TMPro;
 
 public class PlayerControl : MonoBehaviour
 {
+    public bool isActive;
     [Header("Profile")]
     public PlayerAnim playerAnim;
 
-    public int health;
+    public float health;
 
     public float moveSpeed;
     public float moveSpeedDash;
@@ -35,10 +36,16 @@ public class PlayerControl : MonoBehaviour
     public TextMeshProUGUI textHealth;
     public Slider sliderHealth;
 
+    [Header("Utils")]
+    public float maxRangeGreen;
+    public float[] listRangeGreen;
+    public bool isInZone;
+
+
+    [Header("Sound")]
+    public AudioClip clipDash;
     void Start()
     {
-        Health(1);
-
         timerDashCounterDelay = timerDashDelay;
         imageCDDash.fillAmount = 1;
     }
@@ -46,8 +53,11 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isActive) return;
+
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+
 
         if (movement.x < 0)
         {
@@ -74,6 +84,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
+                SoundManager.Instance.PlaySFX(clipDash);
                 isDash = true;
                 timerDashCounter = timerDash;
                 timerDashCounterDelay = 0;
@@ -108,10 +119,24 @@ public class PlayerControl : MonoBehaviour
                 currentItem = null;
             }
         }
+        CheckDistanceTree();
+        //Min Health
+        if (!isInZone)
+        {
+            health -= Time.deltaTime;
+
+            if (health <= 0)
+            {
+                GameManager.Instance.GameLose();
+            }
+        }
+        textHealth.text = $"{(int)this.health}/{100}";
+        sliderHealth.value = health;
     }
 
     private void FixedUpdate()
-    {
+    {   
+        if (!isActive) return;
         if (isDash)
         {
             rigidBody.MovePosition(rigidBody.position + movement * moveSpeedDash * Time.fixedDeltaTime);
@@ -124,10 +149,33 @@ public class PlayerControl : MonoBehaviour
 
     public void Health(int health)
     {
+        if (!isActive) return;
         this.health += health;
 
-        textHealth.text = $"{this.health}/{100}";
+        if (this.health <= 0)
+        {
+            GameManager.Instance.GameLose();
+        }
     }
+    public void CheckDistanceTree()
+    {
+        maxRangeGreen = listRangeGreen[TreeControl.Instance.level - 1];
 
-
+        if (Vector3.Distance(transform.position, GameManager.Instance.positionTree.position) > maxRangeGreen)
+        {
+            OutZone();
+        }
+        else
+        {
+            InZone();
+        }
+    }
+    public void OutZone()
+    {
+        isInZone = false;
+    }
+    public void InZone()
+    {
+        isInZone = true;
+    }
 }

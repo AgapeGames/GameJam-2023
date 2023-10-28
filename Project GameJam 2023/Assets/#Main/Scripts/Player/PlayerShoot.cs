@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerShoot : MonoBehaviour
 {
-
+    public PlayerControl control;
     public Camera cam;
 
     public Transform bulletPoint;
@@ -22,6 +22,9 @@ public class PlayerShoot : MonoBehaviour
     public Image imageCDShoot;
 
 
+
+    [Header("Sound")]
+    public AudioClip sfxShoot;
     void Start()
     {
         timerShootCounter = timerShoot;
@@ -30,7 +33,7 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
-
+        if (!control.isActive) return;
         mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
 
         Vector3 direction = mousePosition - transform.position;
@@ -51,11 +54,13 @@ public class PlayerShoot : MonoBehaviour
             timerShootCounter += Time.deltaTime;
             imageCDShoot.fillAmount = timerShootCounter / timerShoot;
         }
-    }
 
+    }
 
     public void Shoot()
     {
+        SoundManager.Instance.PlaySFX(sfxShoot);
+
         timerShootCounter = 0;
         // Dapatkan posisi mouse dalam ruang dunia
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

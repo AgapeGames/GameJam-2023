@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public Transform positionPlayer;
 
 
+    public PlayerControl playerControl;
     private void Awake()
     {
         Instance = this;
@@ -90,4 +91,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public void GameWin()
+    {
+        PlayerFreeze();
+        CanvasManager.Instance.panelWin.SetActive(true);
+    }
+    public void GameLose()
+    {
+        PlayerFreeze();
+        CanvasManager.Instance.panelLose.SetActive(true);
+    }
+
+    public void PlayerFreeze()
+    {
+        playerControl.isActive = false;
+    }
+    public void PlayerUnfreeze()
+    {
+        playerControl.isActive = true;
+    }
 }

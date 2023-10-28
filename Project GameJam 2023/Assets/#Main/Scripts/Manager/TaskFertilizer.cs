@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TaskFertilizer : MonoBehaviour
 {
@@ -11,8 +12,15 @@ public class TaskFertilizer : MonoBehaviour
     public int target;
     public int targetCounter;
 
+    public float timer;
+    public float timerCounter;
+    public bool isPlay;
+
     public GameObject panelInfo;
     public GameObject panelLose;
+
+    public TextMeshProUGUI textTimer;
+    public TextMeshProUGUI textItem;
     private void OnEnable()
     {
         panelInfo.SetActive(true);
@@ -21,11 +29,30 @@ public class TaskFertilizer : MonoBehaviour
 
     public void Play()
     {
+        isPlay = true;
+        timerCounter = timer;
         targetCounter = 0;
         panelInfo.SetActive(false);
         SpawnRandomImage();
     }
+    private void Update()
+    {
+        if(isPlay)
+        {
+            if(timerCounter > 0)
+            {
+                timerCounter -= Time.deltaTime;
+            }
+            else
+            {
+                timerCounter = 0;
+                Lose();
+            }
+        }
 
+        textItem.text = "Item : " + $"{targetCounter}/{target}";
+        textTimer.text = "Timer : " + (int)timerCounter;
+    }
     void SpawnRandomImage()
     {
         for (int i = 0; i < listFertilizer.Length; i++)
@@ -49,10 +76,12 @@ public class TaskFertilizer : MonoBehaviour
 
     public void Win()
     {
+        isPlay = false;
         taskControl.GiveReward();
     }
     public void Lose()
     {
+        isPlay = false;
         panelLose.gameObject.SetActive(true);
     }
 
