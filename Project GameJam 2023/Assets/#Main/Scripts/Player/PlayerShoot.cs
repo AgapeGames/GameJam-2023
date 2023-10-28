@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -13,9 +14,18 @@ public class PlayerShoot : MonoBehaviour
     public float bulletSpeed;
 
     private Vector3 mousePosition;
+
+
+
+    public float timerShoot;
+    public float timerShootCounter;
+    public Image imageCDShoot;
+
+
     void Start()
     {
-        
+        timerShootCounter = timerShoot;
+        imageCDShoot.fillAmount = 1;
     }
 
     void Update()
@@ -28,15 +38,25 @@ public class PlayerShoot : MonoBehaviour
         transform.up = direction;
 
         //Shooting
-        if (Input.GetButtonDown("Fire1"))
+        if (timerShootCounter >= timerShoot)
         {
-            Shoot();
+            imageCDShoot.fillAmount = 1;
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Shoot();
+            }
+        }
+        else
+        {
+            timerShootCounter += Time.deltaTime;
+            imageCDShoot.fillAmount = timerShootCounter / timerShoot;
         }
     }
 
 
     public void Shoot()
     {
+        timerShootCounter = 0;
         // Dapatkan posisi mouse dalam ruang dunia
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0;

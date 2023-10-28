@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -10,6 +12,16 @@ public class PlayerControl : MonoBehaviour
     public int health;
 
     public float moveSpeed;
+    public float moveSpeedDash;
+
+    public float timerDash;
+    public float timerDashCounter;
+
+    public float timerDashDelay;
+    public float timerDashCounterDelay;
+    public Image imageCDDash;
+
+    public bool isDash;
 
     [Header("Component")]
     public Rigidbody2D rigidBody;
@@ -20,9 +32,15 @@ public class PlayerControl : MonoBehaviour
 
     public Item currentItem;
 
+    public TextMeshProUGUI textHealth;
+    public Slider sliderHealth;
+
     void Start()
     {
-        
+        Health(1);
+
+        timerDashCounterDelay = timerDashDelay;
+        imageCDDash.fillAmount = 1;
     }
 
     // Update is called once per frame
@@ -52,6 +70,35 @@ public class PlayerControl : MonoBehaviour
             playerAnim.SetSpriteSide();
         }
 
+        if (timerDashCounterDelay >= timerDashDelay)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                isDash = true;
+                timerDashCounter = timerDash;
+                timerDashCounterDelay = 0;
+            }
+            imageCDDash.fillAmount = 1;
+        }
+        else
+        {
+            timerDashCounterDelay += Time.deltaTime;
+            imageCDDash.fillAmount = timerDashCounterDelay / timerDashDelay;
+        }
+
+
+        if (isDash)
+        {
+            if (timerDashCounter > 0)
+            {
+                timerDashCounter -= Time.deltaTime;
+            }
+            else
+            {
+                isDash = false;
+            }
+        }
+
         //Get Item
         if(currentItem != null)
         {
@@ -65,8 +112,22 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidBody.MovePosition(rigidBody.position + movement * moveSpeed * Time.fixedDeltaTime);
-
+        if (isDash)
+        {
+            rigidBody.MovePosition(rigidBody.position + movement * moveSpeedDash * Time.fixedDeltaTime);
+        }
+        else
+        {
+            rigidBody.MovePosition(rigidBody.position + movement * moveSpeed * Time.fixedDeltaTime);
+        }
     }
+
+    public void Health(int health)
+    {
+        this.health += health;
+
+        textHealth.text = $"{this.health}/{100}";
+    }
+
 
 }

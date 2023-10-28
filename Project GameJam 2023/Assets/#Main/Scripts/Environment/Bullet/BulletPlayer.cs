@@ -6,6 +6,7 @@ public class BulletPlayer : MonoBehaviour
 {
     public float timeDestroy = 2f;
     public GameObject effectDestroy;
+    public Transform posEffect;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class BulletPlayer : MonoBehaviour
             collision.gameObject.GetComponent<Enemy>().GetDamage();
         }
 
+        Instantiate(effectDestroy, posEffect.position, posEffect.rotation);
 
         Destroy(gameObject);
     }

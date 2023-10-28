@@ -18,6 +18,9 @@ public class CanvasManager : MonoBehaviour
 
     public TextMeshProUGUI textTimerWave;
 
+
+    public GameObject panelTaskWater;
+    public GameObject panelTaskFertilizer;
     private void Awake()
     {
         Instance = this;

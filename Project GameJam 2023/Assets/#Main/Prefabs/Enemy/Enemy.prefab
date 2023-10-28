@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4407467258639319627}
   - component: {fileID: 4407467258639319628}
+  - component: {fileID: 289899540220645774}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5176ead95848cc34981f2a67514d59af, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 638d2284f6b02694aa05effbb549b99c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -82,6 +83,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &289899540220645774
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4407467258639319626}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 400fecaf5dd6c0e42805f600cdfba9fc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4407467259598907049
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,9 +154,16 @@ MonoBehaviour:
   target: {fileID: 0}
   targetPlant: {fileID: 0}
   targetPlayer: {fileID: 0}
-  rangeDetectionPlayer: 2
-  rangeStop: 1.5
+  rangeDetectionPlayer: 3
+  rangeStop: 1
   isStop: 0
+  isSuicide: 0
+  suicideTime: 2
+  suicideTimeCounter: 0
+  rangeSuicide: 2
+  damageBomb: 20
+  targetColor: {r: 1, g: 0, b: 0, a: 1}
+  effectDie: {fileID: 8236398206585415445, guid: d3a346a67cd71d340be421c9259f4a63, type: 3}
 --- !u!61 &4407467259598907050
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -150,7 +177,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.07197886}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -161,7 +188,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4364603, y: 0.7447976}
+  m_Size: {x: 0.4364603, y: 0.55003136}
   m_EdgeRadius: 0
 --- !u!50 &6194084440523383634
 Rigidbody2D:

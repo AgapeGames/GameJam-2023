@@ -219,7 +219,7 @@ MonoBehaviour:
   target: {fileID: 0}
   bulletPoint: {fileID: 3537352648932588584}
   bulletPrefab: {fileID: 8950407827237877558, guid: c35bac6a8a9632c4e92915b36ac4d18e, type: 3}
-  bulletSpeed: 2
+  bulletSpeed: 5
 --- !u!212 &3537352648932588587
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -586,7 +586,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+  m_Color: {r: 1, g: 0.9891556, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

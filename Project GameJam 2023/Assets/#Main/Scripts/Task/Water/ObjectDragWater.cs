@@ -5,6 +5,9 @@ using UnityEngine.EventSystems;
 
 public class ObjectDragWater : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
+    public TaskWater taskWater;
+    public int index;
+
     private Vector2 initialPosition;
 
     public void OnPointerDown(PointerEventData eventData)
@@ -16,5 +19,12 @@ public class ObjectDragWater : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
         transform.position = eventData.position;
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        taskWater.Done(index);
+
+    }
+
 }

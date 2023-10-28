@@ -17,6 +17,9 @@ public class TreeControl : MonoBehaviour
     public GameObject interactionPopup;
 
     public bool playerInside;
+
+
+    public GameObject[] listSkin;
     private void Awake()
     {
         Instance = this;
@@ -35,6 +38,8 @@ public class TreeControl : MonoBehaviour
                 currentFertilizer = 0;
                 currentWater = 0;
                 level++;
+
+                RefreshSize();
             }
 
             if (Input.GetKey(KeyCode.E))
@@ -64,6 +69,20 @@ public class TreeControl : MonoBehaviour
 
     }
 
+    public void RefreshSize()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (i == level - 1)
+            {
+                listSkin[i].SetActive(true);
+            }
+            else
+            {
+                listSkin[i].SetActive(false);
+            }
+        }
+    }
 
 
     private void OnTriggerEnter2D(Collider2D collision)

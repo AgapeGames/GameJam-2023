@@ -41,27 +41,34 @@ public class TaskControl : MonoBehaviour
                 {
                     if (taskType == TaskType.WATER)
                     {
-
+                        CanvasManager.Instance.panelTaskWater.SetActive(true);
                     }
                     else if (taskType == TaskType.FERTILIZER)
                     {
                         //Open Canvas Mini Game
+                        CanvasManager.Instance.panelTaskFertilizer.SetActive(true);
                     }
 
 
                     interactionPopup.SetActive(false);
                     //Contoh
-                    GiveReward();
                 }
             }
         }
     }
 
-    public void GiveReward()
+    public void ResetTask()
     {
+        CanvasManager.Instance.panelTaskWater.SetActive(false);
+        CanvasManager.Instance.panelTaskFertilizer.SetActive(false);
         interactionPopup.SetActive(false);
         isActive = false;
         durationCounter = duration;
+    }
+
+    public void GiveReward()
+    {
+        ResetTask();
 
         if (taskType == TaskType.WATER)
         {
