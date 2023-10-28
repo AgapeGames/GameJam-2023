@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletPlayer : MonoBehaviour
 {
-    public float timeDestroy = .75f;
+    public float timeDestroy = 2f;
     public GameObject effectDestroy;
 
     void Start()
@@ -14,7 +14,8 @@ public class BulletPlayer : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.Equals("Enemy"))
+        Debug.Log(collision.gameObject.name);
+        if (collision.gameObject.tag.Equals("Enemy"))
         {
             collision.gameObject.GetComponent<Enemy>().GetDamage();
         }

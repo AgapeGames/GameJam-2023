@@ -44,8 +44,11 @@ public class PlayerShoot : MonoBehaviour
         // Buat instance dari bullet prefab
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
 
+
         // Menghitung arah dari objek ke mouse
         Vector3 direction = (mousePosition - transform.position).normalized;
+
+        bullet.transform.up = direction;
 
         // Menambahkan kecepatan kepada bullet agar bergerak ke arah mouse
         bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;

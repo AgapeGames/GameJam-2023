@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     [Header("Profile")]
+    public PlayerAnim playerAnim;
+
     public int health;
 
     public float moveSpeed;
@@ -16,6 +18,7 @@ public class PlayerControl : MonoBehaviour
     private Vector2 movement;
 
 
+    public Item currentItem;
 
     void Start()
     {
@@ -35,6 +38,28 @@ public class PlayerControl : MonoBehaviour
         else if (movement.x > 0)
         {
             spriteCharacter.flipX = false;
+        }
+
+        if(movement.y > 0)
+        {
+            playerAnim.SetSpriteUp();
+        }else if (movement.y < 0)
+        {
+            playerAnim.SetSpriteDown();
+        }
+        else
+        {
+            playerAnim.SetSpriteSide();
+        }
+
+        //Get Item
+        if(currentItem != null)
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                currentItem.GetItem();
+                currentItem = null;
+            }
         }
     }
 
