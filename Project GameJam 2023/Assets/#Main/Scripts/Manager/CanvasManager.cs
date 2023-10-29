@@ -10,6 +10,8 @@ public class CanvasManager : MonoBehaviour
     public TextMeshProUGUI textScraps;
     public TextMeshProUGUI textWater;
     public TextMeshProUGUI textFertilizer;
+    public TextMeshProUGUI textLeaf;
+    public TextMeshProUGUI textApple;
 
 
     public TextMeshProUGUI textLevel;
@@ -22,6 +24,7 @@ public class CanvasManager : MonoBehaviour
     public GameObject panelTaskWater;
     public GameObject panelTaskFertilizer;
 
+    public PanelSkill panelSkill;
     public GameObject panelLose;
     public GameObject panelWin;
     private void Awake()
@@ -46,12 +49,28 @@ public class CanvasManager : MonoBehaviour
         textFertilizer.text = $"{ResourceManager.Instance.fertilizer}";
         textScraps.text = $"{ResourceManager.Instance.scraps}";
         textBattery.text = $"{ResourceManager.Instance.battery}";
+        textLeaf.text = $"{ResourceManager.Instance.leaf}";
+        textApple.text = $"{ResourceManager.Instance.apple}";
     }
 
     public void RefreshRequirement()
     {
-        textLevel.text = $"Tree Level\n{TreeControl.Instance.level}";
+        textLevel.text = $"Tree Level : {TreeControl.Instance.level}";
         textNeedWater.text = $"{TreeControl.Instance.currentWater}/{TreeControl.Instance.GetNeedWater()}";
         textNeedFertilizer.text = $"{TreeControl.Instance.currentFertilizer}/{TreeControl.Instance.GetNeedFertilizer()}";
+    }
+
+    public void PanelSkill(bool con)
+    {
+        panelSkill.gameObject.SetActive(con);
+        if (con)
+        {
+            panelSkill.RefreshText();
+            GameManager.Instance.PlayerFreeze();
+        }
+        else
+        {
+            GameManager.Instance.PlayerUnfreeze();
+        }
     }
 }

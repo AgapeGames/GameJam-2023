@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
 
     public Color targetColor; // target color is red
 
+    public GameObject effectBomb;
     public GameObject effectDie;
 
 
@@ -58,7 +59,7 @@ public class Enemy : MonoBehaviour
 
         SoundManager.Instance.PlaySFX(clipExplode);
 
-        GameObject obj = Instantiate(effectDie, transform.position, transform.rotation);
+        GameObject obj = Instantiate(effectBomb, transform.position, transform.rotation);
         Destroy(obj, 2f);
         Destroy(gameObject);
     }

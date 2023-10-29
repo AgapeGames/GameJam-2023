@@ -12,6 +12,8 @@ public class ResourceManager : MonoBehaviour
     public int scraps;
     public int battery;
 
+    public int leaf;
+    public int apple;
     private void Awake()
     {
         Instance = this;
@@ -45,6 +47,16 @@ public class ResourceManager : MonoBehaviour
     public void Battery(int battery)
     {
         this.battery += battery;
+        CanvasManager.Instance.RefreshResource();
+    }
+    public void Leaf(int leaf)
+    {
+        this.leaf += leaf;
+        CanvasManager.Instance.RefreshResource();
+    }
+    public void Apple(int apple)
+    {
+        this.apple += apple;
         CanvasManager.Instance.RefreshResource();
     }
 }

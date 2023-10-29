@@ -9,6 +9,7 @@ public class PlayerControl : MonoBehaviour
     public bool isActive;
     [Header("Profile")]
     public PlayerAnim playerAnim;
+    public PlayerShoot playerShoot;
 
     public float health;
 
@@ -21,6 +22,11 @@ public class PlayerControl : MonoBehaviour
     public float timerDashDelay;
     public float timerDashCounterDelay;
     public Image imageCDDash;
+
+    public int levelAttack = 1;
+    public float effectAttack;
+    public int levelDash;
+    public float effectDash = 1;
 
     public bool isDash;
 
@@ -37,9 +43,14 @@ public class PlayerControl : MonoBehaviour
     public Slider sliderHealth;
 
     [Header("Utils")]
+    public float rangeRegen;
     public float maxRangeGreen;
     public float[] listRangeGreen;
-    public bool isInZone;
+    public bool isOutZone;
+
+    public TextInfo textInfo;
+    public Transform posSpawnText;
+    public Transform objectCanvas;
 
 
     [Header("Sound")]
@@ -58,27 +69,26 @@ public class PlayerControl : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
+        if (Input.GetKeyDown(KeyCode.S))
+            playerAnim.AnimDown(true);
+        else if (Input.GetKeyUp(KeyCode.S))
+            playerAnim.AnimDown(false);
 
-        if (movement.x < 0)
-        {
-            spriteCharacter.flipX = true;
-        }
-        else if (movement.x > 0)
-        {
-            spriteCharacter.flipX = false;
-        }
+        if (Input.GetKeyDown(KeyCode.W))
+            playerAnim.AnimUp(true);
+        else if (Input.GetKeyUp(KeyCode.W))
+            playerAnim.AnimUp(false);
 
-        if(movement.y > 0)
-        {
-            playerAnim.SetSpriteUp();
-        }else if (movement.y < 0)
-        {
-            playerAnim.SetSpriteDown();
-        }
-        else
-        {
-            playerAnim.SetSpriteSide();
-        }
+        if (Input.GetKeyDown(KeyCode.A))
+            playerAnim.AnimLeft(true);
+        else if (Input.GetKeyUp(KeyCode.A))
+            playerAnim.AnimLeft(false);
+
+        if (Input.GetKeyDown(KeyCode.D))
+            playerAnim.AnimRight(true);
+        else if (Input.GetKeyUp(KeyCode.D))
+            playerAnim.AnimRight(false);
+
 
         if (timerDashCounterDelay >= timerDashDelay)
         {
@@ -120,18 +130,37 @@ public class PlayerControl : MonoBehaviour
             }
         }
         CheckDistanceTree();
-        //Min Health
-        if (!isInZone)
-        {
-            health -= Time.deltaTime;
+        CalculateZone();
 
-            if (health <= 0)
-            {
-                GameManager.Instance.GameLose();
-            }
-        }
+
         textHealth.text = $"{(int)this.health}/{100}";
         sliderHealth.value = health;
+    }
+
+    public void SetCurrentItem(Item currentItem)
+    {
+        if(this.currentItem != null)
+            this.currentItem.interactionPopup.SetActive(false);
+        this.currentItem = currentItem;
+    }
+
+    public float counterOutZone;
+
+    private void CalculateZone()
+    {
+        //Min Health
+        if (isOutZone)
+        {
+            counterOutZone -= Time.deltaTime;
+
+            if (counterOutZone < 0)
+            {
+                counterOutZone = 1;
+
+                if (health > 0)
+                    Health(-1);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -150,6 +179,16 @@ public class PlayerControl : MonoBehaviour
     public void Health(int health)
     {
         if (!isActive) return;
+
+
+        GameObject newTextInfo = Instantiate(textInfo.gameObject, posSpawnText.position, posSpawnText.rotation, objectCanvas.transform);
+        TextInfo newInfo = newTextInfo.GetComponent<TextInfo>();
+            
+        if (health > 0)
+            newInfo.ShowText("+" + ((int)health).ToString(), 1);
+        if (health < 0)
+            newInfo.ShowText(((int)health).ToString());
+
         this.health += health;
 
         if (this.health <= 0)
@@ -163,19 +202,24 @@ public class PlayerControl : MonoBehaviour
 
         if (Vector3.Distance(transform.position, GameManager.Instance.positionTree.position) > maxRangeGreen)
         {
-            OutZone();
+            isOutZone = true;
         }
         else
         {
-            InZone();
+            isOutZone = false;
         }
     }
-    public void OutZone()
+
+    public void UpgradeShoot()
     {
-        isInZone = false;
+        levelAttack++;
+        playerShoot.timerShoot = 1 - (levelAttack * effectAttack);
+        CanvasManager.Instance.panelSkill.RefreshText();
     }
-    public void InZone()
+    public void UpgradeDash()
     {
-        isInZone = true;
+        levelDash++;
+        timerDashDelay = 2.5f - (levelDash * effectDash);
+        CanvasManager.Instance.panelSkill.RefreshText();
     }
 }
