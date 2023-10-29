@@ -11,23 +11,23 @@ TagManager:
   - 
   - Water
   - UI
+  - blueprint
   - 
   - 
+  - Ground
+  - Grass lv 1
+  - Grass lv 2
+  - 'Grass lv 3 '
+  - Grass lv 4
+  - Grass lv 5
+  - Floor
+  - Building
+  - Wall
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Layer 1
+  - Layer 2
+  - Layer 3
   - 
   - 
   - 
@@ -38,12 +38,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Ground
-    uniqueID: 190170427
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 1310966683
+  - name: Layer 1
+    uniqueID: 2425651459
+    locked: 0
+  - name: Layer 2
+    uniqueID: 4250941897
+    locked: 0
+  - name: Layer 3
+    uniqueID: 4189426099
     locked: 0
