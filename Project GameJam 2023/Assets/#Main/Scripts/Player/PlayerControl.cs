@@ -141,7 +141,18 @@ public class PlayerControl : MonoBehaviour
     {
         if(this.currentItem != null)
             this.currentItem.interactionPopup.SetActive(false);
+
         this.currentItem = currentItem;
+        this.currentItem.interactionPopup.SetActive(true);
+
+    }
+    public void RemoveCurrentItem(Item currentItem)
+    {
+        if (this.currentItem == currentItem)
+        {
+            currentItem.interactionPopup.SetActive(false);
+            this.currentItem = null;
+        }
     }
 
     public float counterOutZone;

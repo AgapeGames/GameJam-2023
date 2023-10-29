@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public bool isReadySpawn;
 
     public int minCountEnemy, maxCountEnemy;
+    public int[] minCountEnemyLevel, maxCountEnemylevel;
     public GameObject prefabEnemy;
     public Transform[] listPositionSpawn;
 
@@ -42,7 +43,6 @@ public class GameManager : MonoBehaviour
         {
             if(timerWaveCounter <= 0)
             {
-                timerWaveCounter = timerWave;
                 isReadySpawn = false;
                 StartWave();
             }
@@ -53,11 +53,18 @@ public class GameManager : MonoBehaviour
 
             CanvasManager.Instance.textTimerWave.text = $"Next Wave : {(int)timerWaveCounter}s";
         }
+
+        SpawnItems();
     }
 
     public void StartWave()
     {
-        countEnemy = Random.Range(minCountEnemy, maxCountEnemy);
+
+        timerWaveCounter = timerWave + TreeControl.Instance.level * 30;
+        countEnemy = Random.Range(
+            minCountEnemyLevel[TreeControl.Instance.level - 1], 
+            maxCountEnemylevel[TreeControl.Instance.level - 1]);
+
         StartCoroutine(SpawnEnemy(1));
 
     }
@@ -110,5 +117,73 @@ public class GameManager : MonoBehaviour
     public void PlayerUnfreeze()
     {
         playerControl.isActive = true;
+    }
+
+    [Header("Items Spawns")]
+    public float timeSpawns;
+    private float timeSpawnsCounter;
+    public int maxCountItems;
+
+    public LayerMask obstacleLayer;
+    public List<int> listItems;
+
+    public GameObject objItemScraps;
+    public GameObject objItemBattery;
+
+    public float minXPosSpawn;
+    public float maxXPosSpawn;
+    public float minYPosSpawn;
+    public float maxYPosSpawn;
+
+    public void SpawnItems()
+    {
+        timeSpawnsCounter -= Time.deltaTime;
+        if(timeSpawnsCounter <= 0)
+        {
+            timeSpawnsCounter = timeSpawns;
+            SpawnRandomItem();
+        }
+    }
+    private void SpawnRandomItem()
+    {
+        if (listItems.Count >= maxCountItems) return;
+
+        Vector3 randomSpawnPoint = GetRandomSpawnPoint();
+
+        // Periksa apakah ada objek di lokasi spawn
+        if (!IsObstacleInPath(randomSpawnPoint))
+        {
+            if (Random.Range(-1, 100f) > 30)
+            {
+                GameObject objS = Instantiate(objItemScraps, randomSpawnPoint, Quaternion.identity);
+                objS.GetComponent<Item>().Spawn();
+            }
+            else
+            {
+                GameObject objB = Instantiate(objItemBattery, randomSpawnPoint, Quaternion.identity);
+                objB.GetComponent<Item>().Spawn();
+            }
+        }
+    }
+
+    private Vector3 GetRandomSpawnPoint()
+    {
+        float randomX = Random.Range(minXPosSpawn, maxXPosSpawn);
+        float randomY = Random.Range(minYPosSpawn,maxYPosSpawn);
+
+        return transform.position + new Vector3(randomX, randomY, 0);
+    }
+
+    private bool IsObstacleInPath(Vector3 spawnPoint)
+    {
+        RaycastHit hit;
+
+        // Mengecek apakah ada collider dalam radius kecil di sekitar spawnPoint
+        if (Physics.SphereCast(spawnPoint, 0.5f, Vector3.up, out hit, 0.1f, obstacleLayer))
+        {
+            return true; // Ada objek penghalang di dekat spawnPoint
+        }
+
+        return false; // Tidak ada objek penghalang di dekat spawnPoint
     }
 }

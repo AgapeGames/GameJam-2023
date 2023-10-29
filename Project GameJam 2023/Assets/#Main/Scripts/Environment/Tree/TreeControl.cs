@@ -9,9 +9,7 @@ public class TreeControl : MonoBehaviour
     public int health;
     public int level;
 
-    public int currentWater;
     public int[] requirementWater;
-    public int currentFertilizer;
     public int[] requirementFertilizer;
 
     public GameObject interactionPopup;
@@ -56,49 +54,37 @@ public class TreeControl : MonoBehaviour
         {
             if (playerInside)
             {
-                if (currentFertilizer == GetNeedFertilizer() && currentWater == GetNeedWater())
+                if(Input.GetKeyDown(KeyCode.E))
                 {
-                    currentFertilizer = 0;
-                    currentWater = 0;
-                    level++;
-
-                    if (level >= 5)
-                    {
-                        level = 5;
-                        GameManager.Instance.GameWin();
-                        return;
-                    }
-                    RefreshSize();
-                }
-
-                if (level >= 5) return;
-
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-
-                    if (currentWater < GetNeedWater())
-                    {
-                        if (ResourceManager.Instance.water > 0)
-                        {
-                            ResourceManager.Instance.Water(-1);
-                            currentWater++;
-                        }
-                    }
-
-                    if (currentFertilizer < GetNeedFertilizer())
-                    {
-                        if (ResourceManager.Instance.fertilizer > 0)
-                        {
-                            ResourceManager.Instance.Fertilizer(-1);
-                            currentFertilizer++;
-                        }
-                    }
-
-                    CanvasManager.Instance.RefreshRequirement();
+                    UpgradeTree();
                 }
             }
         }
 
+    }
+
+    public void UpgradeTree()
+    {
+        if(ResourceManager.Instance.water >= GetNeedWater() 
+            && ResourceManager.Instance.fertilizer >= GetNeedFertilizer())
+        {
+            ResourceManager.Instance.Water(-GetNeedWater());
+            ResourceManager.Instance.Fertilizer(-GetNeedFertilizer());
+
+            level++;
+
+            RefreshSize();
+            RefreshPopUpTree();
+            CanvasManager.Instance.RefreshResource();
+        }
+
+
+        if (level >= 5)
+        {
+            level = 5;
+            GameManager.Instance.GameWin();
+            return;
+        }
     }
 
     public void RefreshSize()
@@ -122,8 +108,8 @@ public class TreeControl : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             interactionPopup.SetActive(true);
+            RefreshPopUpTree();
             playerInside = true;
-            CanvasManager.Instance.RefreshRequirement();
         }
     }
 
@@ -136,6 +122,13 @@ public class TreeControl : MonoBehaviour
         }
     }
 
+    public TextMeshProUGUI textNeedWater;
+    public TextMeshProUGUI textNeedFertilizer;
+    public void RefreshPopUpTree()
+    {
+        textNeedWater.text = "" + GetNeedWater();
+        textNeedFertilizer.text = "" + GetNeedFertilizer();
+    }
     public int GetNeedWater()
     {
         if (level >= 5) return 999;
@@ -159,6 +152,8 @@ public class TreeControl : MonoBehaviour
 
     public void ProcessDrop()
     {
+
+        if (level < 3) return;
         timerSpawnLeafCounter -= Time.deltaTime;
         timerSpawnAppleCounter -= Time.deltaTime;
 
@@ -166,14 +161,16 @@ public class TreeControl : MonoBehaviour
         {
             //Drop item
             Vector3 newPos = new Vector3(posSpawnItem.position.x + Random.Range(-3f,3f), posSpawnItem.position.y + Random.Range(-1f, 1f), 1);
-            Instantiate(prefabLeaf, newPos, Quaternion.identity);
+            GameObject objLeaf = Instantiate(prefabLeaf, newPos, Quaternion.identity);
+            objLeaf.GetComponent<Item>().Spawn();
             timerSpawnLeafCounter = Random.Range(timerSpawnLeafMin, timerSpawnLeafMax);
         }
         if (timerSpawnAppleCounter <= 0)
         {
             //Drop item
             Vector3 newPos = new Vector3(posSpawnItem.position.x + Random.Range(-3f, 3f), posSpawnItem.position.y + Random.Range(-1f, 1f), 1);
-            Instantiate(prefabApple, newPos, Quaternion.identity);
+            GameObject objApple = Instantiate(prefabApple, newPos, Quaternion.identity);
+            objApple.GetComponent<Item>().Spawn();
             timerSpawnAppleCounter = Random.Range(timerSpawnAppleMin, timerSpawnAppleMax);
         }
     }

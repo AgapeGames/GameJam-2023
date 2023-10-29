@@ -10,7 +10,8 @@ public class TowerBase : MonoBehaviour
     public GameObject towerLocked;
     public GameObject towerUnlocked;
 
-    public TextMeshProUGUI textBuild;
+    public TextMeshProUGUI textNeedScraps;
+    public TextMeshProUGUI textNeedBattery;
 
     public int scraps;
     public int battery;
@@ -41,8 +42,9 @@ public class TowerBase : MonoBehaviour
         if (isUnlocked) return;
         if (collision.gameObject.tag.Equals("Player"))
         {
-            textBuild.text = $"Build\nScraps: {scraps}\nBattery: {battery}";
             interactionPopup.SetActive(true);
+            textNeedScraps.text = "" + scraps;
+            textNeedBattery.text = "" + battery;
             playerInside = true;
         }
     }
