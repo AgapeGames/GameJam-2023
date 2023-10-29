@@ -3,31 +3,34 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Bullet
+  - Tree
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - blueprint
+  - Enemy
+  - BulletPlayer
+  - BulletEnemy
+  - FamilyPlayer
+  - MiniMap
   - 
   - 
-  - Ground
-  - Grass lv 1
-  - Grass lv 2
-  - 'Grass lv 3 '
-  - Grass lv 4
-  - Grass lv 5
-  - Floor
-  - Building
-  - Wall
   - 
   - 
-  - Layer 1
-  - Layer 2
-  - Layer 3
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -41,12 +44,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Layer 1
-    uniqueID: 2425651459
+  - name: Item
+    uniqueID: 1675095345
     locked: 0
-  - name: Layer 2
-    uniqueID: 4250941897
+  - name: Player
+    uniqueID: 1310966683
     locked: 0
-  - name: Layer 3
-    uniqueID: 4189426099
+  - name: UI
+    uniqueID: 3876766199
     locked: 0
