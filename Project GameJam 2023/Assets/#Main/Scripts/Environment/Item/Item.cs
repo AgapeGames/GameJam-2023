@@ -18,6 +18,17 @@ public class Item : MonoBehaviour
     public CircleCollider2D collider;
     public GameObject effectCollect;
 
+    public void Spawn()
+    {
+        float randomRot = Random.Range(-90f,90f);
+
+        objSprite.transform.eulerAngles = new Vector3(0,0, randomRot);
+    }
+    public void SetRangeCount(int min, int max)
+    {
+        this.min = min;
+        this.max = max;
+    }
     public void GetItem()
     {
         if (isUsed) return;
@@ -65,7 +76,6 @@ public class Item : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             collision.gameObject.GetComponent<PlayerControl>().SetCurrentItem(this);
-            interactionPopup.SetActive(true);
         }
     }
 
@@ -73,8 +83,7 @@ public class Item : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-            collision.gameObject.GetComponent<PlayerControl>().currentItem = null;
-            interactionPopup.SetActive(false);
+            collision.gameObject.GetComponent<PlayerControl>().RemoveCurrentItem(this);
         }
     }
 }

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 314183683401843844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 4407467259598907051}
   m_RootOrder: 1
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_SortingLayerID: 1310966683
   m_SortingLayer: 2
   m_SortingOrder: 1000
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 1, g: 0.025157154, b: 0.025157154, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 638d2284f6b02694aa05effbb549b99c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -248,6 +248,9 @@ MonoBehaviour:
   targetColor: {r: 1, g: 0, b: 0, a: 1}
   effectBomb: {fileID: 8236398206585415445, guid: d3a346a67cd71d340be421c9259f4a63, type: 3}
   effectDie: {fileID: 8236398206585415445, guid: 5d56f3182bf8f7e4c91277bce32dfa43, type: 3}
+  itemSpawn: {fileID: 6624253298794101125, guid: 62a6d1c59c620dc41892ed9e7a1ece79, type: 3}
+  minSpawn: 3
+  maxSpawn: 6
   clipExplode: {fileID: 8300000, guid: 6bccc07ce349cb447a5e93a49b6b2f2e, type: 3}
   clipDie: {fileID: 8300000, guid: 6e15d562e3b43a346ba7b0e307984ab3, type: 3}
 --- !u!61 &4407467259598907050

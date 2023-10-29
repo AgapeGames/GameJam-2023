@@ -17,6 +17,7 @@ public class TowerControl : MonoBehaviour
     public float powerCounter;
 
     public Slider sliderPower;
+    public Slider sliderDuration;
 
     private void Start()
     {
@@ -34,6 +35,7 @@ public class TowerControl : MonoBehaviour
             {
                 Deactivated();
             }
+            sliderDuration.value = counterDuration/duration;
         }
         else
         {

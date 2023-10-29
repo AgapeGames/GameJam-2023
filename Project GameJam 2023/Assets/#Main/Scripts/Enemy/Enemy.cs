@@ -32,6 +32,8 @@ public class Enemy : MonoBehaviour
     public GameObject effectBomb;
     public GameObject effectDie;
 
+    public Item itemSpawn;
+    public int minSpawn, maxSpawn;
 
     public AudioClip clipExplode;
     public AudioClip clipDie;
@@ -126,7 +128,6 @@ public class Enemy : MonoBehaviour
         direction.Normalize();
 
 
-
         Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
 
         transform.position = newPosition;
@@ -141,6 +142,9 @@ public class Enemy : MonoBehaviour
             SoundManager.Instance.PlaySFX(clipDie);
             GameManager.Instance.EnemyDie(this);
             GameObject obj = Instantiate(effectDie, transform.position, transform.rotation);
+            GameObject objItem = Instantiate(itemSpawn.gameObject, transform.position, Quaternion.identity);
+            objItem.GetComponent<Item>().Spawn();
+            objItem.GetComponent<Item>().SetRangeCount(4, 6);
             Destroy(obj, 2f);
             Destroy(gameObject);
         }

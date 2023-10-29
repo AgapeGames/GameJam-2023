@@ -77,7 +77,7 @@ public class TaskFertilizer : MonoBehaviour
     public void Win()
     {
         isPlay = false;
-        taskControl.GiveReward();
+        //taskControl.isUnlocked = true;
     }
     public void Lose()
     {

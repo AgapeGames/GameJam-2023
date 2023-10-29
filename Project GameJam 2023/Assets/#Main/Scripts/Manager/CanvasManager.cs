@@ -35,7 +35,6 @@ public class CanvasManager : MonoBehaviour
     void Start()
     {
         RefreshResource();
-        RefreshRequirement();
     }
 
     void Update()
@@ -51,13 +50,7 @@ public class CanvasManager : MonoBehaviour
         textBattery.text = $"{ResourceManager.Instance.battery}";
         textLeaf.text = $"{ResourceManager.Instance.leaf}";
         textApple.text = $"{ResourceManager.Instance.apple}";
-    }
-
-    public void RefreshRequirement()
-    {
         textLevel.text = $"Tree Level : {TreeControl.Instance.level}";
-        textNeedWater.text = $"{TreeControl.Instance.currentWater}/{TreeControl.Instance.GetNeedWater()}";
-        textNeedFertilizer.text = $"{TreeControl.Instance.currentFertilizer}/{TreeControl.Instance.GetNeedFertilizer()}";
     }
 
     public void PanelSkill(bool con)
