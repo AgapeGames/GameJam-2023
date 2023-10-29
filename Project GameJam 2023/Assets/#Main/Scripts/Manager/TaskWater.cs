@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TaskWater : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class TaskWater : MonoBehaviour
     public ObjectDragWater[] listObject;
     public Transform[] listPosition;
 
+    public Image imageSoal;
+
+    public Sprite[] listSprite;
     public int answer;
     public void Play()
     {
@@ -31,6 +35,7 @@ public class TaskWater : MonoBehaviour
     public void SetUp()
     {
         answer = Random.Range(1, 4);
+        imageSoal.sprite = listSprite[answer - 1];
 
         for (int i = 0; i < listObject.Length; i++)
         {

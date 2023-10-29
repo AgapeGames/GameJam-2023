@@ -18,6 +18,7 @@ public class TreeControl : MonoBehaviour
 
 
     public GameObject[] listSkin;
+    public GameObject[] listSkinSprite;
 
 
     public TextMeshProUGUI textHealth;
@@ -95,8 +96,11 @@ public class TreeControl : MonoBehaviour
 
             Debug.Log("aktif " + i);
             listSkin[i].SetActive(true);
-            
+            listSkinSprite[i].SetActive(false);
+
         }
+
+        listSkinSprite[level - 1].SetActive(true);
     }
 
 
