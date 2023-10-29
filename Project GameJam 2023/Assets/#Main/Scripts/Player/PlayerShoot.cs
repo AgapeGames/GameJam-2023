@@ -21,8 +21,6 @@ public class PlayerShoot : MonoBehaviour
     public float timerShootCounter;
     public Image imageCDShoot;
 
-
-
     [Header("Sound")]
     public AudioClip sfxShoot;
     void Start()

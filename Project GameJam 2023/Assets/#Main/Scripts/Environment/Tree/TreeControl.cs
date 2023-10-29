@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TreeControl : MonoBehaviour
@@ -26,17 +24,31 @@ public class TreeControl : MonoBehaviour
 
     public TextMeshProUGUI textHealth;
     public Slider sliderHealth;
+
+    public float timerSpawnLeafMin, timerSpawnLeafMax;
+    private float timerSpawnLeafCounter;
+    public GameObject prefabLeaf;
+
+    public float timerSpawnAppleMin, timerSpawnAppleMax;
+    private float timerSpawnAppleCounter;
+    public GameObject prefabApple;
+
+    public Transform posSpawnItem;
     private void Awake()
     {
         Instance = this;
     }
     void Start()
     {
-        
+
+        timerSpawnLeafCounter = Random.Range(timerSpawnLeafMin, timerSpawnLeafMax);
+        timerSpawnAppleCounter = Random.Range(timerSpawnAppleMin, timerSpawnAppleMax);
     }
 
     void Update()
     {
+        ProcessDrop();
+
         textHealth.text = $"{(int)health}/{100}";
         sliderHealth.value = health;
 
@@ -142,6 +154,27 @@ public class TreeControl : MonoBehaviour
         if(this.health <= 0)
         {
             GameManager.Instance.GameLose();
+        }
+    }
+
+    public void ProcessDrop()
+    {
+        timerSpawnLeafCounter -= Time.deltaTime;
+        timerSpawnAppleCounter -= Time.deltaTime;
+
+        if(timerSpawnLeafCounter <= 0)
+        {
+            //Drop item
+            Vector3 newPos = new Vector3(posSpawnItem.position.x + Random.Range(-3f,3f), posSpawnItem.position.y + Random.Range(-1f, 1f), 1);
+            Instantiate(prefabLeaf, newPos, Quaternion.identity);
+            timerSpawnLeafCounter = Random.Range(timerSpawnLeafMin, timerSpawnLeafMax);
+        }
+        if (timerSpawnAppleCounter <= 0)
+        {
+            //Drop item
+            Vector3 newPos = new Vector3(posSpawnItem.position.x + Random.Range(-3f, 3f), posSpawnItem.position.y + Random.Range(-1f, 1f), 1);
+            Instantiate(prefabApple, newPos, Quaternion.identity);
+            timerSpawnAppleCounter = Random.Range(timerSpawnAppleMin, timerSpawnAppleMax);
         }
     }
 }

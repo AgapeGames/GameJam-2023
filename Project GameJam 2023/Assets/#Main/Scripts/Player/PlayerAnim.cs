@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class PlayerAnim : MonoBehaviour
 {
-    public SpriteRenderer spriteRendereer;
-
-    public Sprite spriteSide;
-    public Sprite spriteUp;
-    public Sprite spriteDown;
+    public Animator anim;
     void Start()
     {
         
     }
 
-    public void SetSpriteSide()
+    public void AnimUp(bool con)
     {
-        spriteRendereer.sprite = spriteSide;
+        anim.SetBool("IsUp", con);
     }
-    public void SetSpriteUp()
+    public void AnimDown(bool con)
     {
-        spriteRendereer.sprite = spriteUp;
+        anim.SetBool("IsDown", con);
     }
-    public void SetSpriteDown()
+    public void AnimRight(bool con)
     {
-        spriteRendereer.sprite = spriteDown;
+        anim.SetBool("IsRight", con);
+    }
+    public void AnimLeft(bool con)
+    {
+        anim.SetBool("IsLeft", con);
     }
 }
