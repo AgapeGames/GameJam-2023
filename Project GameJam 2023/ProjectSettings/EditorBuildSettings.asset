@@ -10,7 +10,7 @@ EditorBuildSettings:
     guid: f011e5b4837b080458c2e4c1a6ad2ded
   - enabled: 1
     path: Assets/#Main/Scenes/GamePlay.unity
-    guid: b4f33d3ccc4b89548a420983f54eb1f8
+    guid: 860ffe2f455759747b377c1e7f7aedd3
   - enabled: 1
     path: Assets/#Main/Scenes/Credit.unity
     guid: 93dd4e07a96ca2649b408e08f9d679d9

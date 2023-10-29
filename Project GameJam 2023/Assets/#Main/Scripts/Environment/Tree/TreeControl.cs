@@ -89,16 +89,13 @@ public class TreeControl : MonoBehaviour
 
     public void RefreshSize()
     {
-        for (int i = 0; i < 4; i++)
+        Debug.Log("refresh " + level);
+        for (int i = 0; i < level - 1; i++)
         {
-            if (i == level - 1)
-            {
-                listSkin[i].SetActive(true);
-            }
-            else
-            {
-                listSkin[i].SetActive(false);
-            }
+
+            Debug.Log("aktif " + i);
+            listSkin[i].SetActive(true);
+            
         }
     }
 
