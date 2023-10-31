@@ -49,7 +49,6 @@ public class Enemy : MonoBehaviour
             yield return null; // wait one frame
         }
 
-        spriteCharacter.color = targetColor; // ensure the final color is the target color
         if (Vector3.Distance(transform.position, targetPlayer.position) < rangeSuicide)
         {
             targetPlayer.GetComponent<PlayerControl>().Health(-damageBomb);
@@ -161,6 +160,26 @@ public class Enemy : MonoBehaviour
         {
             isStop = true;
             isSuicide = true;
+        }
+
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+            spriteCharacter.color = targetColor;
+
+            if (Vector3.Distance(transform.position, targetPlayer.position) < rangeSuicide)
+            {
+                targetPlayer.GetComponent<PlayerControl>().Health(-damageBomb);
+            }
+            if (Vector3.Distance(transform.position, targetPlant.position) < rangeSuicide)
+            {
+                targetPlant.GetComponent<TreeControl>().Health(-damageBomb);
+            }
+
+            SoundManager.Instance.PlaySFX(clipExplode);
+
+            GameObject obj = Instantiate(effectBomb, transform.position, transform.rotation);
+            Destroy(obj, 2f);
+            Destroy(gameObject);
         }
     }
 }

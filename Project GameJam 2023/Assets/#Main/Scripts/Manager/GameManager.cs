@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public float timerWave;
     public float timerWaveCounter;
-    public float timerFinish;
+    //public float timerFinish;
     public bool isReadySpawn;
 
     public int minCountEnemy, maxCountEnemy;
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
                 timerWaveCounter -= Time.deltaTime;
             }
 
-            CanvasManager.Instance.textTimerWave.text = $"Next Wave : {(int)timerWaveCounter}s";
+            CanvasManager.Instance.textTimerWave.text = $"Next Wave : {(int)timerWaveCounter} s";
         }
 
         SpawnItems();
@@ -75,10 +75,10 @@ public class GameManager : MonoBehaviour
     }
     public void CheckEnemy()
     {
-        if (listEnemy.Count <= 0)
+/*        if (listEnemy.Count <= 0)
         {
             timerWaveCounter = timerFinish;
-        }
+        }*/
     }
 
     IEnumerator SpawnEnemy(int currentCountEnemy)
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
     public int maxCountItems;
 
     public LayerMask obstacleLayer;
-    public List<int> listItems;
+    public List<GameObject> listItems;
 
     public GameObject objItemScraps;
     public GameObject objItemBattery;
@@ -157,13 +157,21 @@ public class GameManager : MonoBehaviour
             {
                 GameObject objS = Instantiate(objItemScraps, randomSpawnPoint, Quaternion.identity);
                 objS.GetComponent<Item>().Spawn();
+                listItems.Add(objS);
+
             }
             else
             {
                 GameObject objB = Instantiate(objItemBattery, randomSpawnPoint, Quaternion.identity);
                 objB.GetComponent<Item>().Spawn();
+                listItems.Add(objB);
             }
         }
+    }
+
+    public void RemoveItem(GameObject item)
+    {
+        listItems.Remove(item);
     }
 
     private Vector3 GetRandomSpawnPoint()

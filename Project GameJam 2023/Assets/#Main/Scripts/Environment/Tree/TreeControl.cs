@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,10 +28,14 @@ public class TreeControl : MonoBehaviour
     public float timerSpawnLeafMin, timerSpawnLeafMax;
     private float timerSpawnLeafCounter;
     public GameObject prefabLeaf;
+    public List<GameObject> listLeaf;
+    public int maxSpawnLeaf;
 
     public float timerSpawnAppleMin, timerSpawnAppleMax;
     private float timerSpawnAppleCounter;
     public GameObject prefabApple;
+    public List<GameObject> listApple;
+    public int maxSpawnApple;
 
     public Transform posSpawnItem;
     private void Awake()
@@ -73,6 +78,7 @@ public class TreeControl : MonoBehaviour
             ResourceManager.Instance.Fertilizer(-GetNeedFertilizer());
 
             level++;
+            Health(100);
 
             RefreshSize();
             RefreshPopUpTree();
@@ -145,7 +151,9 @@ public class TreeControl : MonoBehaviour
     {
         this.health += health;
 
-        if(this.health <= 0)
+        if (this.health >= 100) this.health = 100;
+
+        if (this.health <= 0)
         {
             GameManager.Instance.GameLose();
         }
@@ -153,26 +161,45 @@ public class TreeControl : MonoBehaviour
 
     public void ProcessDrop()
     {
-
-        if (level < 3) return;
         timerSpawnLeafCounter -= Time.deltaTime;
         timerSpawnAppleCounter -= Time.deltaTime;
 
         if(timerSpawnLeafCounter <= 0)
         {
             //Drop item
-            Vector3 newPos = new Vector3(posSpawnItem.position.x + Random.Range(-3f,3f), posSpawnItem.position.y + Random.Range(-1f, 1f), 1);
-            GameObject objLeaf = Instantiate(prefabLeaf, newPos, Quaternion.identity);
-            objLeaf.GetComponent<Item>().Spawn();
-            timerSpawnLeafCounter = Random.Range(timerSpawnLeafMin, timerSpawnLeafMax);
+            if (listLeaf.Count <= maxSpawnLeaf)
+            {
+
+                Vector3 newPos = new Vector3(posSpawnItem.position.x + Random.Range(-3f, 3f), posSpawnItem.position.y + Random.Range(-1f, 1f), 1);
+                GameObject objLeaf = Instantiate(prefabLeaf, newPos, Quaternion.identity);
+                objLeaf.GetComponent<Item>().Spawn();
+                timerSpawnLeafCounter = Random.Range(timerSpawnLeafMin, timerSpawnLeafMax);
+
+
+                listLeaf.Add(objLeaf);
+            }
         }
         if (timerSpawnAppleCounter <= 0)
         {
-            //Drop item
-            Vector3 newPos = new Vector3(posSpawnItem.position.x + Random.Range(-3f, 3f), posSpawnItem.position.y + Random.Range(-1f, 1f), 1);
-            GameObject objApple = Instantiate(prefabApple, newPos, Quaternion.identity);
-            objApple.GetComponent<Item>().Spawn();
-            timerSpawnAppleCounter = Random.Range(timerSpawnAppleMin, timerSpawnAppleMax);
+            if (listApple.Count <= maxSpawnApple)
+            {
+                //Drop item
+                Vector3 newPos = new Vector3(posSpawnItem.position.x + Random.Range(-3f, 3f), posSpawnItem.position.y + Random.Range(-1f, 1f), 1);
+                GameObject objApple = Instantiate(prefabApple, newPos, Quaternion.identity);
+                objApple.GetComponent<Item>().Spawn();
+                timerSpawnAppleCounter = Random.Range(timerSpawnAppleMin, timerSpawnAppleMax);
+
+                listApple.Add(objApple);
+            }
         }
+    }
+
+    public void RemoveLeaf(GameObject item)
+    {
+        listLeaf.Remove(item);
+    }
+    public void RemoveApple(GameObject item)
+    {
+        listApple.Remove(item);
     }
 }

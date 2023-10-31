@@ -43,9 +43,11 @@ public class Item : MonoBehaviour
          if (typeItem == TypeItem.SCRAPS)
         {
             ResourceManager.Instance.Scraps(value);
+            GameManager.Instance.RemoveItem(gameObject);
         }else if (typeItem == TypeItem.BATTERY)
         {
             ResourceManager.Instance.Battery(value);
+            GameManager.Instance.RemoveItem(gameObject);
         }
         else if (typeItem == TypeItem.WATER)
         {
@@ -58,10 +60,13 @@ public class Item : MonoBehaviour
         else if (typeItem == TypeItem.LEAF)
         {
             ResourceManager.Instance.Leaf(value);
+            TreeControl.Instance.RemoveLeaf(gameObject);
         }
         else if (typeItem == TypeItem.APPLE)
         {
+            GameManager.Instance.playerControl.Health(25);
             ResourceManager.Instance.Apple(value);
+            TreeControl.Instance.RemoveApple(gameObject);
         }
 
         interactionPopup.SetActive(false);

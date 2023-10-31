@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1310966683
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1000
   m_Sprite: {fileID: 21300000, guid: 638d2284f6b02694aa05effbb549b99c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -151,8 +151,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1310966683
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 638d2284f6b02694aa05effbb549b99c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -246,9 +246,12 @@ MonoBehaviour:
   rangeSuicide: 2
   damageBomb: 20
   targetColor: {r: 1, g: 0, b: 0, a: 1}
-  effectBomb: {fileID: 8236398206585415445, guid: d3a346a67cd71d340be421c9259f4a63, type: 3}
-  effectDie: {fileID: 8236398206585415445, guid: 5d56f3182bf8f7e4c91277bce32dfa43, type: 3}
-  itemSpawn: {fileID: 6624253298794101125, guid: 62a6d1c59c620dc41892ed9e7a1ece79, type: 3}
+  effectBomb: {fileID: 8236398206585415445, guid: d3a346a67cd71d340be421c9259f4a63,
+    type: 3}
+  effectDie: {fileID: 8236398206585415445, guid: 5d56f3182bf8f7e4c91277bce32dfa43,
+    type: 3}
+  itemSpawn: {fileID: 6624253298794101125, guid: 62a6d1c59c620dc41892ed9e7a1ece79,
+    type: 3}
   minSpawn: 3
   maxSpawn: 6
   clipExplode: {fileID: 8300000, guid: 6bccc07ce349cb447a5e93a49b6b2f2e, type: 3}

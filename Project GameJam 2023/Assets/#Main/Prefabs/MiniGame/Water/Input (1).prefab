@@ -51,6 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 989138c54b640bd49a7f5d5dd1498957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskWater: {fileID: 0}
+  index: 0
 --- !u!222 &7780897163982394992
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -113,5 +115,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 125, y: 125}
   m_EdgeRadius: 0

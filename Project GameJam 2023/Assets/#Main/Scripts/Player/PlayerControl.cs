@@ -201,6 +201,7 @@ public class PlayerControl : MonoBehaviour
             newInfo.ShowText(((int)health).ToString());
 
         this.health += health;
+        if (this.health >= 100) this.health = 100;
 
         if (this.health <= 0)
         {
